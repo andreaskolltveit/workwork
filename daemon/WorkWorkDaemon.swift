@@ -1196,7 +1196,9 @@ class SocketServer {
 
         var response: [String: Any] = ["ok": false, "error": "invalid input"]
         if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-            response = processor.processEvent(json)
+            DispatchQueue.main.sync {
+                response = self.processor.processEvent(json)
+            }
         }
 
         if let respData = try? JSONSerialization.data(withJSONObject: response, options: []) {
@@ -1330,7 +1332,7 @@ func main() {
                                     statePath: statePath)
     let server = SocketServer(socketPath: resolvedSocket, processor: processor)
 
-    let configWatcher = ConfigWatcher(path: resolvedConfig, queue: server.queue) {
+    let configWatcher = ConfigWatcher(path: resolvedConfig, queue: .main) {
         processor.reloadConfig(path: resolvedConfig)
     }
     configWatcher.start()
