@@ -1,0 +1,16 @@
+# Built binary
+daemon/workworkd
+
+# Downloaded packs (install.sh fetches these)
+packs/
+
+# Generated at install/runtime
+config.json
+.state.json
+.paused
+.workworkd.sock
+.workworkd.log
+.sound.pid
+
+# macOS
+.DS_Store

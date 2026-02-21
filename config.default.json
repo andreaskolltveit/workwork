@@ -1,0 +1,34 @@
+{
+  "enabled": true,
+  "volume": 0.5,
+  "default_pack": "peon",
+  "pack_rotation": [],
+  "pack_rotation_mode": "random",
+  "categories": {
+    "session.start": true,
+    "task.complete": true,
+    "task.error": true,
+    "task.acknowledge": false,
+    "input.required": true,
+    "resource.limit": true,
+    "user.spam": true
+  },
+  "desktop_notifications": true,
+  "notification_style": "overlay",
+  "use_sound_effects_device": true,
+  "annoyed_threshold": 3,
+  "annoyed_window_seconds": 10,
+  "silent_window_seconds": 0,
+  "session_ttl_days": 7,
+  "suppress_subagent_complete": false,
+  "path_rules": [],
+  "tab_color": {
+    "enabled": true,
+    "colors": {
+      "working": [130, 105, 50],
+      "ready": [65, 115, 80],
+      "needs_approval": [150, 70, 70],
+      "done": [65, 100, 140]
+    }
+  }
+}
