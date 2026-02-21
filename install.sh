@@ -5,8 +5,8 @@ set -euo pipefail
 # --- Determine repo directory ---
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-# If run via curl|bash, clone the repo first
-if [ "$SCRIPT_DIR" = "/dev" ] || [ "$SCRIPT_DIR" = "/tmp" ] || [ ! -f "$SCRIPT_DIR/workwork.sh" ]; then
+# If run via curl|bash (process substitution), SCRIPT_DIR won't contain workwork.sh
+if [ ! -f "$SCRIPT_DIR/workwork.sh" ]; then
   echo "Cloning WorkWork..."
   CLONE_DIR="$HOME/.claude/hooks/workwork"
   if [ -d "$CLONE_DIR/.git" ]; then
