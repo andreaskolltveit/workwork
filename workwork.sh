@@ -98,10 +98,8 @@ if [ -n "${TERM_PROGRAM_VERSION:-}" ] && [ -n "${PPID:-}" ]; then
 fi
 
 # Inject context into JSON and send to daemon
-ENRICHED=$(printf '%s' "$INPUT" | sed \
-  -e 's/}$//' \
-  -e "s\$\$,\"bundle_id\":\"${BUNDLE_ID}\",\"ide_pid\":\"${IDE_PID}\"}$" \
-)
+ENRICHED=$(printf '%s' "$INPUT" | sed "s/}\$/,\"bundle_id\":\"${BUNDLE_ID}\",\"ide_pid\":\"${IDE_PID}\"}/")
+
 
 resp=$(daemon_send "$ENRICHED" || true)
 [ -z "${resp:-}" ] && exit 0

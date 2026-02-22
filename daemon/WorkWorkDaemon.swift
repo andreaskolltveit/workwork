@@ -666,9 +666,11 @@ class EventProcessor {
 
         case "Notification":
             if ntype == "permission_prompt" {
+                category = "input.required"
                 status = "needs approval"
                 marker = "\u{25cf} "
             } else if ntype == "idle_prompt" {
+                category = "input.required"
                 status = "done"
                 marker = "\u{25cf} "
                 notify = true
