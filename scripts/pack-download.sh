@@ -258,7 +258,10 @@ for p in data.get('packs', []):
     SOURCE_PATH=""
   fi
 
-  if [ -z "$SOURCE_REPO" ] || [ -z "$SOURCE_REF" ] || [ -z "$SOURCE_PATH" ]; then
+  # Normalize "." to empty (root of repo)
+  [ "$SOURCE_PATH" = "." ] && SOURCE_PATH=""
+
+  if [ -z "$SOURCE_REPO" ] || [ -z "$SOURCE_REF" ]; then
     SOURCE_REPO="$FALLBACK_REPO"
     SOURCE_REF="$FALLBACK_REF"
     SOURCE_PATH="$pack"

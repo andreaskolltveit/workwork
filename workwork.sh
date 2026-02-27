@@ -15,8 +15,31 @@ if [ $# -gt 0 ]; then
     packs)
       case "${2:-}" in
         install)
-          bash "$WORK_DIR/scripts/pack-download.sh" --dir="$WORK_DIR" --packs="${3:-}"
+          shift 2
+          args=("--dir=$WORK_DIR")
+          for a in "$@"; do
+            case "$a" in
+              --*) args+=("$a") ;;
+              *) args+=("--packs=$a") ;;
+            esac
+          done
+          bash "$WORK_DIR/scripts/pack-download.sh" "${args[@]}"
           exit $?
+          ;;
+        list)
+          active=$(daemon_send '{"cli":"packs","action":"current"}' 2>/dev/null)
+          active_name=$(json_field "$active" "pack")
+          for d in "$WORK_DIR"/packs/*/openpeon.json; do
+            [ -f "$d" ] || continue
+            pack_dir=$(dirname "$d")
+            name=$(basename "$pack_dir")
+            count=$(ls "$pack_dir/sounds/" 2>/dev/null | wc -l | tr -d ' ')
+            display=$(python3 -c "import json; print(json.load(open('$d')).get('display_name','$name'))" 2>/dev/null || echo "$name")
+            marker=""
+            [ "$name" = "$active_name" ] && marker=" *"
+            printf "  %-28s %s (%d sounds)%s\n" "$name" "$display" "$count" "$marker"
+          done
+          exit 0
           ;;
         remove)
           if [ -z "${3:-}" ]; then echo "Usage: workwork packs remove <name>"; exit 1; fi
