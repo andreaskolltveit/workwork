@@ -2,7 +2,9 @@
 daemon/workworkd
 
 # Downloaded packs (install.sh fetches these)
-packs/
+packs/*/
+# Bundle default pack with repo
+!packs/peon/
 
 # Generated at install/runtime
 config.json
